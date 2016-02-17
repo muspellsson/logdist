@@ -9,17 +9,17 @@ string_component(component(Name, X, T, R, Alpha), Res) :-
 	number_string(T, Ts),
 	number_string(R, Rs),
 	number_string(Alpha, As),
-	string_concat(Name, "; ", R0),
+	string_concat(Name, "\t ", R0),
 	string_concat(R0, Xs, R1),
-	string_concat(R1, "; ", R2),
+	string_concat(R1, "\t ", R2),
 	string_concat(R2, Ts, R3),
-	string_concat(R3, "; ", R4),
+	string_concat(R3, "\t ", R4),
 	string_concat(R4, Rs, R5),
-	string_concat(R5, "; ", R6),
+	string_concat(R5, "\t ", R6),
 	string_concat(R6, As, Res).
 
 component_string(Str, component(Name, X, T, R, Alpha)) :-
-	split_string(Str, ";", " ", [Name, R0, R1, R2, R3]),
+	split_string(Str, "\t", " ", [Name, R0, R1, R2, R3]),
 	number_string(X, R0),
 	number_string(T, R1),
 	number_string(R, R2),

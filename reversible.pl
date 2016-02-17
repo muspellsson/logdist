@@ -90,3 +90,20 @@ rev_ece(F, U, L, Res) :-
 	gibbs1(F, U, L, R2),
 	Res is (R1 - R0) / (R1 * R2).
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
