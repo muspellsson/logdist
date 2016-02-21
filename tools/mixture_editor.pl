@@ -1,4 +1,4 @@
-:- module(tools,
+:- module(mixture_editor,
 	  [mixture_editor/0]).
 :- use_module(library(pce)).
 :- use_module(stringio).
@@ -37,10 +37,26 @@ add(Name, X, T, R, A, B) :-
 	string_component(component(Name, X1, T1, R1, A1), S),
 	send(B, append, S).
 
+save(Name, X, T, R, A, B) :-
+	\+(get(B, selection, _)),
+	add(Name, X, T, R, A, B).
 
+save(Name, X, T, R, A, B) :-
+	atom_number(X, X1),
+	atom_number(T, T1),
+	atom_number(R, R1),
+	atom_number(A, A1),
+	get(B, selection, I),
+	string_component(component(Name, X1, T1, R1, A1), S),
+	send(I, key, S),
+	send(I, label, S).
 
 delete(B) :-
 	get(B, selection, I),
 	send(B, delete, I).
+
+
+
+
 
 
