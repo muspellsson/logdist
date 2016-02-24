@@ -1,6 +1,7 @@
 :- module(help_viewer,
 	  [help_viewer/1, help_frame/1]).
 :- use_module(library(pce)).
+:- encoding(utf8).
 
 help_frame(V) :-
     new(F, frame('Помощь')),

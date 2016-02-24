@@ -1,14 +1,16 @@
 :- module(ask_mixture,
-	  [ask_mixture/1]).
+	  [ask_mixture/2]).
 :- use_module(library(pce)).
 :- use_module(library(help_message)).
 :- use_module(help_viewer).
 :- use_module(stringio).
+:- encoding(utf8).
 
-ask_mixture(M) :-
+ask_mixture(M, M1) :-
 	new(D, dialog('Редактор компонентов')),
 	send(D, append, new(B, browser)),
 	send(B, attribute, hor_stretch, 100),
+	maplist(store(B), M1),
 	send_list(D, append,
 		  [ new(N1, text_item('наименование')),
 		    new(N2, text_item('мольная_доля')),
@@ -49,6 +51,10 @@ ask_mixture(M) :-
 	Answer \== @nil,
 	M = Answer.
 
+store(B, E) :-
+    string_component(E, S),
+    send(B, append, S).
+
 ret(D, B) :-
     get(B, map, @arg1?key, S),
     chain_list(S, L),
@@ -60,8 +66,7 @@ add(Name, X, T, R, A, B) :-
 	atom_number(T, T1),
 	atom_number(R, R1),
 	atom_number(A, A1),
-	string_component(component(Name, X1, T1, R1, A1), S),
-	send(B, append, S).
+	store(B, component(Name, X1, T1, R1, A1)).
 
 save(Name, X, T, R, A, B) :-
 	\+(get(B, selection, _)),
