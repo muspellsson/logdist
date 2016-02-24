@@ -6,10 +6,11 @@
 :- use_module(stringio).
 :- encoding(utf8).
 
-ask_mixture(M, M1) :-
+ask_mixture(R, S) :-
 	new(D, dialog('Редактор компонентов')),
 	send(D, append, new(B, browser)),
 	send(B, attribute, hor_stretch, 100),
+	mixture_string(S, M1),
 	maplist(store(B), M1),
 	send_list(D, append,
 		  [ new(N1, text_item('наименование')),
@@ -49,7 +50,7 @@ ask_mixture(M, M1) :-
 	get(D, confirm, Answer),
 	send(D, destroy),
 	Answer \== @nil,
-	M = Answer.
+	string_mixture(Answer, R).
 
 store(B, E) :-
     string_component(E, S),
