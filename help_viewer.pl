@@ -9,7 +9,10 @@ help_frame(V) :-
     send(V, editable, @off),
     send(F, open).
 
-help_viewer(mixture) :-
+help_viewer(T) :-
     help_frame(V),
-    send(V, load, file('help1.txt')),
+    help_file(T, F),
+    send(V, load, F),
     send(V, editable, @off).
+
+help_file(mixture, F) :- F = 'help/mixture.txt'.
