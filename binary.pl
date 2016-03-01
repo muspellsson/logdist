@@ -2,6 +2,7 @@
 :- use_module(library(help_message)).
 :- use_module(ask_mixture).
 :- use_module(ask_vocab).
+:- use_module(help_viewer).
 
 :- encoding(utf8).
 
@@ -14,18 +15,27 @@ variable(mlower, string, get, "Lower product mixture").
 initialise(D) :->
 	send_super(D, initialise('Бинарная ректификация')),
 	send(D, clearvars),
+	send(D, menus),
 	send(D, mixture_group),
 	send(D, betad_group),
 	send(D, betab_group),
 	send(D, k_group),
 	send(D, append, button('расчет')),
-	send(D, append, button('помощь'), right),
+	send(D, append, button('помощь', 
+		message(@prolog, help_viewer, binary)), right),
 	send_super(D, open).
 
 clearvars(D) :->
 	send(D, slot, mfeed, ""),
 	send(D, slot, mupper, ""),
 	send(D, slot, mlower, "").
+
+menus(D) :->
+	send(D, append, new(M, menu_bar)),
+	send(M, append, new(Fm, popup('файл'))),
+	send(M, append, new(Ft, popup('инструменты'))),
+	send(Fm, append, new(Mo, menu_item('открыть'))),
+	send(Mo, accelerator, 'Ctrl-O').
 
 mixture_group(D) :->
 	new(D1, dialog_group(buttons, group)),

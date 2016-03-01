@@ -2,6 +2,7 @@
 	[ask_vocab/1]).
 :- use_module(library(pce)).
 :- use_module(library(readutil)).
+:- use_module(help_viewer).
 :- encoding(utf8).
 
 ask_vocab(BB) :-
@@ -23,6 +24,7 @@ ask_vocab(BB) :-
 	send(N1, label, 'Площадь куба, м²:'),
 	send(D, append, button(ok, message(@prolog, ret, D, 
 		B1, B2, B3, N1?selection))),
+	send(D, append, button('помощь', message(@prolog, help_viewer, vocab))),
 	fill_browser(1, B1),
 	fill_browser(2, B2),
 	fill_browser(3, B3),
@@ -61,15 +63,15 @@ calculate(S1, S2, S3, S4, Res) :-
 	Res = No1.	
 
 fill_browser(1, B) :-
-	open('vocab/vocab1.txt', read, F),
+	open('vocab/vocab1.txt', read, F, [encoding(utf8)]),
 	do_fill(F, B).
 
 fill_browser(2, B) :-
-	open('vocab/vocab2.txt', read, F),
+	open('vocab/vocab2.txt', read, F, [encoding(utf8)]),
 	do_fill(F, B).
 
 fill_browser(3, B) :-
-	open('vocab/vocab3.txt', read, F),
+	open('vocab/vocab3.txt', read, F, [encoding(utf8)]),
 	do_fill(F, B).
 
 do_fill(F, B) :-
